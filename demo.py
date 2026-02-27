@@ -1,6 +1,6 @@
 """
-WebSocket с нуля. Реализация по RFC 6455.
-Сервер и клиент в одном модуле.
+WebSocket с нуля — реализация по RFC 6455
+Сервер и клиент в одном модуле, запуск через multiprocessing.
 """
 
 import asyncio
@@ -256,15 +256,16 @@ async def handle_close(
 ):
     """
     Отвечает на входящий фрейм закрытия.
-    Пустой payload допустим (код считается 1000).
-    Payload длиной 1 байт является нарушением протокола.
-    Если указана причина закрытия, она должна быть валидной UTF-8 строкой.
     """
     if len(payload) == 0:
-        await send_close(writer, CLOSE_NORMAL, mask=mask)
+        # Пустой payload допустим — отвечаем тоже пустым закрывающим фреймом.
+        # Локально код считается 1005, но 1005 не передаётся по сети.
+        writer.write(build_frame(b"", OP_CLOSE, mask=mask))
+        await writer.drain()
         return
 
     if len(payload) == 1:
+        # Полезная нагрузка длиной 1 байт является нарушением протокола.
         await send_close(writer, CLOSE_PROTO_ERROR, mask=mask)
         return
 
@@ -277,6 +278,7 @@ async def handle_close(
         await send_close(writer, CLOSE_PROTO_ERROR, mask=mask)
         return
 
+    # Если указана причина закрытия, она должна быть валидной UTF-8 строкой.
     if reason_bytes:
         try:
             reason_bytes.decode("utf-8")
