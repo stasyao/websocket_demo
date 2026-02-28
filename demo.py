@@ -131,7 +131,7 @@ def _validate_rsv_bits(rsv: int) -> None:
     if rsv != 0:
         raise ValueError(
             f"Ненулевые RSV-биты без согласованного расширения: 0x{rsv:02X} "
-            f"(RFC 6455 §5.2)"
+            f"(RFC 6455, разд. 5.2)"
         )
 
 
@@ -153,7 +153,7 @@ async def _parse_frame_length(reader: asyncio.StreamReader, len_byte: int) -> in
         if length >> 63:
             raise ValueError(
                 f"Старший бит 64-битного поля длины не равен нулю: {length} "
-                f"(RFC 6455 §5.2)"
+                f"(RFC 6455, разд. 5.2)"
             )
         if length <= 65535:
             raise ValueError(
