@@ -2,7 +2,7 @@
 
 Реализация протокола WebSocket ([RFC 6455](https://www.rfc-editor.org/rfc/rfc6455)) на чистом Python без сторонних зависимостей. Только стандартная библиотека: `asyncio`, `hashlib`, `struct`, `secrets`.
 
-Код написан как учебный материал к статье "Анатомия WebSocket: человечный разбор RFC 6455". Каждый шаг жизненного цикла соединения отражен в отдельной функции. Можно читать код параллельно со спецификацией.
+Код написан как учебный материал к статье ["Анатомия WebSocket: человечный разбор RFC 6455"](https://habr.com/ru/articles/1004772/). Каждый шаг жизненного цикла соединения отражен в отдельной функции.
 
 ## Запуск
 
@@ -44,100 +44,113 @@ python websocket_demo.py
 Пример вывода:
 
 ```
-[23:46:02.626] SERVER · [TCP] Слушаем 127.0.0.1:8765
-[23:46:02.629] SERVER · [TCP] Новое подключение от ('127.0.0.1', 38132)
-[23:46:02.629] CLIENT · [TCP] Подключились к 127.0.0.1:8765
-[23:46:02.630] CLIENT · [HAND] Sec-WebSocket-Key=qT6mqt+yAt30GoLOFzd2yQ==
-[23:46:02.630] CLIENT -> [HTTP] GET / HTTP/1.1 (запрос на рукопожатие)
-[23:46:02.630] SERVER <- [HTTP] Получен запрос (153 байт)
-[23:46:02.631] SERVER · [HAND] Sec-WebSocket-Key=qT6mqt+yAt30GoLOFzd2yQ==
-[23:46:02.631] SERVER · [HAND] Sec-WebSocket-Accept=jhe75eoFZzPEn7EgaOrpZvZdWWw=
-[23:46:02.631] SERVER -> [HTTP] 101 Switching Protocols рукопожатие завершено
-[23:46:02.631] SERVER · [STATE] OPEN
-[23:46:02.631] CLIENT <- [HTTP] Получен ответ (129 байт)
-[23:46:02.631] CLIENT · [HAND] Sec-WebSocket-Accept проверен: jhe75eoFZzPEn7EgaOrpZvZdWWw=
-[23:46:02.631] CLIENT · [STATE] OPEN
-[23:46:03.633] CLIENT -> [APP] message from CLIENT #1
-[23:46:03.633] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
-[23:46:03.633] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
-[23:46:03.633] SERVER <- [APP] 'message from CLIENT #1'
-[23:46:06.222] SERVER -> [APP] message from SERVER #1
-[23:46:06.222] SERVER -> [FRAME] opcode=TEXT len=22
-[23:46:06.223] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
-[23:46:06.223] CLIENT <- [APP] 'message from SERVER #1'
-[23:46:06.724] CLIENT -> [APP] message from CLIENT #2
-[23:46:06.725] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
-[23:46:06.725] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
-[23:46:06.725] SERVER <- [APP] 'message from CLIENT #2'
-[23:46:07.725] SERVER -> [APP] message from SERVER #2
-[23:46:07.725] SERVER -> [FRAME] opcode=TEXT len=22
-[23:46:07.725] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
-[23:46:07.725] CLIENT <- [APP] 'message from SERVER #2'
-[23:46:07.725] CLIENT -> [APP] message from CLIENT #3
-[23:46:07.725] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
-[23:46:07.726] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
-[23:46:07.726] SERVER <- [APP] 'message from CLIENT #3'
-[23:46:08.727] CLIENT -> [APP] message from CLIENT #4
-[23:46:08.727] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
-[23:46:08.727] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
-[23:46:08.727] SERVER <- [APP] 'message from CLIENT #4'
-[23:46:09.226] SERVER -> [APP] message from SERVER #3
-[23:46:09.226] SERVER -> [FRAME] opcode=TEXT len=22
-[23:46:09.227] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
-[23:46:09.227] CLIENT <- [APP] 'message from SERVER #3'
-[23:46:09.728] CLIENT -> [APP] message from CLIENT #5
-[23:46:09.728] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
-[23:46:09.729] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
-[23:46:09.729] SERVER <- [APP] 'message from CLIENT #5'
-[23:46:10.229] CLIENT -> [APP] Инициируем закрытие соединения
-[23:46:10.230] SERVER <- [FRAME] opcode=CLOSE fin=1 masked=1 len=6 payload=b'\x03\xe8done'
-[23:46:10.230] SERVER -> [FRAME] opcode=CLOSE (reply)
-[23:46:10.230] SERVER · [STATE] CLOSING -> CLOSED
-[23:46:10.231] CLIENT <- [FRAME] opcode=CLOSE fin=1 masked=0 len=2 payload=b'\x03\xe8'
-[23:46:10.231] CLIENT · [FRAME] opcode=CLOSE после отправки нашего Close (ответ не отправляем)
-[23:46:10.231] CLIENT · [STATE] CLOSING
-[23:46:10.231] SERVER · [STATE] CLOSED
-[23:46:10.231] SERVER · [TCP] TCP-соединение закрыто
-[23:46:10.231] CLIENT · [STATE] CLOSED
-[23:46:10.231] CLIENT · [TCP] TCP-соединение закрыто
+[11:41:35.963] SERVER · [TCP] Слушаем 127.0.0.1:8765
+[11:41:35.965] CLIENT · [TCP] Подключились к 127.0.0.1:8765
+[11:41:35.965] SERVER · [TCP] Новое подключение от ('127.0.0.1', 39826)
+[11:41:35.965] CLIENT · [HAND] Sec-WebSocket-Key=ptmPzmtykTeT+Mbrpsb8vQ==
+[11:41:35.966] CLIENT -> [HTTP] GET / HTTP/1.1 (запрос на рукопожатие)
+[11:41:35.966] SERVER <- [HTTP] Получен запрос (153 байт)
+[11:41:35.966] SERVER · [HAND] Sec-WebSocket-Key=ptmPzmtykTeT+Mbrpsb8vQ==
+[11:41:35.966] SERVER · [HAND] Sec-WebSocket-Accept=zmfstbuT8b+4rBD33rzKcupxDzk=
+[11:41:35.966] SERVER -> [HTTP] 101 Switching Protocols рукопожатие завершено
+[11:41:35.966] SERVER · [STATE] OPEN
+[11:41:35.966] CLIENT <- [HTTP] Получен ответ (129 байт)
+[11:41:35.966] CLIENT · [HAND] Sec-WebSocket-Accept проверен: zmfstbuT8b+4rBD33rzKcupxDzk=
+[11:41:35.966] CLIENT · [STATE] OPEN
+[11:41:36.967] CLIENT -> [APP] message from CLIENT #1
+[11:41:36.967] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
+[11:41:36.968] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
+[11:41:36.968] SERVER <- [APP] 'message from CLIENT #1'
+[11:41:37.467] SERVER -> [APP] message from SERVER #1
+[11:41:37.467] SERVER -> [FRAME] opcode=TEXT len=22
+[11:41:37.467] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
+[11:41:37.467] CLIENT <- [APP] 'message from SERVER #1'
+[11:41:37.969] CLIENT -> [APP] message from CLIENT #2
+[11:41:37.969] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
+[11:41:37.970] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
+[11:41:37.970] SERVER <- [APP] 'message from CLIENT #2'
+[11:41:38.969] SERVER -> [APP] message from SERVER #2
+[11:41:38.969] SERVER -> [FRAME] opcode=TEXT len=22
+[11:41:38.969] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
+[11:41:38.969] CLIENT <- [APP] 'message from SERVER #2'
+[11:41:38.969] CLIENT -> [APP] message from CLIENT #3
+[11:41:38.969] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
+[11:41:38.970] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
+[11:41:38.970] SERVER <- [APP] 'message from CLIENT #3'
+[11:41:39.971] CLIENT -> [APP] message from CLIENT #4
+[11:41:39.971] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
+[11:41:39.972] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
+[11:41:39.972] SERVER <- [APP] 'message from CLIENT #4'
+[11:41:40.470] SERVER -> [APP] message from SERVER #3
+[11:41:40.471] SERVER -> [FRAME] opcode=TEXT len=22
+[11:41:40.471] CLIENT <- [FRAME] opcode=TEXT fin=1 masked=0 len=22 payload=b'message from SERVER '...
+[11:41:40.471] CLIENT <- [APP] 'message from SERVER #3'
+[11:41:41.768] CLIENT -> [APP] message from CLIENT #5
+[11:41:41.768] CLIENT -> [FRAME] opcode=TEXT len=22 MASKED=1
+[11:41:41.769] SERVER <- [FRAME] opcode=TEXT fin=1 masked=1 len=22 payload=b'message from CLIENT '...
+[11:41:41.769] SERVER <- [APP] 'message from CLIENT #5'
+[11:41:42.269] CLIENT -> [APP] Инициируем закрытие соединения
+[11:41:42.270] SERVER <- [FRAME] opcode=CLOSE fin=1 masked=1 len=6 payload=b'\x03\xe8done'
+[11:41:42.270] SERVER -> [FRAME] opcode=CLOSE (reply)
+[11:41:42.270] SERVER · [STATE] CLOSING -> CLOSED
+[11:41:42.270] CLIENT <- [FRAME] opcode=CLOSE fin=1 masked=0 len=2 payload=b'\x03\xe8'
+[11:41:42.270] CLIENT · [FRAME] opcode=CLOSE после отправки нашего закрывающего фрейма (ответ не отправляем)
+[11:41:42.270] CLIENT · [STATE] CLOSING
+[11:41:42.270] SERVER · [STATE] CLOSED
+[11:41:42.270] SERVER · [TCP] TCP-соединение закрыто
+[11:41:42.271] CLIENT · [STATE] CLOSED
+[11:41:42.271] CLIENT · [TCP] TCP-соединение закрыто
 ```
 
 ## Структура модуля
 
-```
-websocket_demo.py
-│
-├── Константы и опкоды фреймов  (OP_TEXT, OP_BINARY, OP_PING, OP_PONG, OP_CLOSE ...)
-├── Вспомогательные функции
-│   ├── apply_mask()               маскирование/демаскирование payload
-│   ├── compute_accept_key()       SHA-1 + base64 для Sec-WebSocket-Accept
-│   └── generate_key()             криптографически случайный Sec-WebSocket-Key
-│
-├── Рукопожатие
-│   ├── read_http_headers()        чтение HTTP-запроса/ответа до \r\n\r\n
-│   ├── validate_handshake()       валидация входящего запроса на стороне сервера
-│   └── validate_server_response() валидация ответа 101 на стороне клиента
-│
-├── Фрейминг
-│   ├── build_frame()              сборка фрейма: FIN + RSV + opcode + length + [mask] + payload
-│   └── parse_frame()              разбор входящего фрейма с валидацией по RFC 6455
-│
-├── Управляющие фреймы
-│   ├── send_ping() / send_pong()  пинг-понг для проверки жизнеспособности соединения
-│   ├── send_close()               отправка закрывающего фрейма, блокирует поток
-│   ├── handle_close()             ответ на входящий закрывающий фрейм
-│   └── validate_close_code()      проверка допустимости кода закрытия
-│
-├── Диспетчер
-│   └── dispatch_frame()           маршрутизация фреймов исходя из их опкода, сборка фрагментов
-│
-├── Сервер
-│   ├── server_handle()            обработчик одного соединения
-│   └── run_server()               запуск asyncio-сервера
-│
-└── Клиент
-    └── run_client()               полный цикл: рукопожате, обмен фреймами, закрытие
-```
+- **Константы и опкоды** — `OP_TEXT`, `OP_BINARY`, `OP_PING`, `OP_PONG`, `OP_CLOSE`, `CLOSE_NORMAL` и др.
+
+- **Вспомогательные функции**
+  - `apply_mask()` — маскирование/демаскирование payload
+  - `compute_accept_key()` — SHA-1 + base64 для Sec-WebSocket-Accept
+  - `generate_key()` — криптографически случайный Sec-WebSocket-Key
+
+- **Рукопожатие**
+  - `read_http_headers()` — чтение HTTP-запроса/ответа до \r\n\r\n
+  - `validate_handshake()` — валидация входящего запроса на стороне сервера
+  - `validate_server_response()` — валидация ответа 101 на стороне клиента
+
+- **Фрейминг**
+  - `build_frame()` — сборка фрейма: FIN + RSV + opcode + length + [mask] + payload
+  - `parse_frame()` — разбор входящего фрейма
+    - `_validate_rsv_bits()` — валидация RSV-битов
+    - `_parse_frame_length()` — парсинг длины с валидацией минимального кодирования
+    - `_validate_control_frame_constraints()` — проверка ограничений управляющих фреймов
+    - `_read_and_unmask_payload()` — чтение и демаскирование payload
+
+- **Управляющие фреймы**
+  - `send_ping()` / `send_pong()` — пинг-понг для проверки жизнеспособности соединения
+  - `send_close()` — отправка закрывающего фрейма
+  - `handle_close()` — ответ на входящий закрывающий фрейм
+  - `validate_close_code()` — проверка допустимости кода закрытия
+
+- **Диспетчер**
+  - `dispatch_frame()` — маршрутизация фреймов по опкодам
+    - `_validate_masking()` — валидация MASK-бита (клиент MASK=1, сервер MASK=0)
+    - `_handle_control_frame()` — обработка PING/PONG/CLOSE
+    - `_manage_fragmentation()` — управление сборкой фрагментированных сообщений
+    - `_assemble_and_decode_message()` — сборка фрагментов и декодирование UTF-8
+
+- **Сервер**
+  - `server_handle()` — обработчик одного соединения
+    - `_perform_server_handshake()` — выполнение WebSocket-рукопожатия
+    - `_server_ticker()` — отправка периодических сообщений
+    - `_run_server_message_loop()` — основной цикл обработки входящих фреймов
+    - `_cleanup_server_connection()` — очистка ресурсов и закрытие TCP
+  - `run_server()` — запуск asyncio-сервера
+
+- **Клиент**
+  - `run_client()` — полный цикл соединения
+    - `_perform_client_handshake()` — выполнение WebSocket-рукопожатия
+    - `_client_sender()` — отправка сообщений и инициация закрытия
+    - `_run_client_message_loop()` — основной цикл обработки входящих фреймов
+    - `_cleanup_client_connection()` — ожидание TCP FIN, очистка ресурсов
 
 ## Жизненный цикл соединения
 
@@ -178,6 +191,8 @@ if error := validate_handshake(lines[0], headers):
     await bad_request(error)
     return
 ```
+
+`validate_handshake` проверяет: метод `GET`, версию `HTTP/1.1` (RFC 6455, разд. 4.2.1), наличие заголовков `Upgrade`, `Connection`, `Sec-WebSocket-Key`, `Sec-WebSocket-Version: 13`.
 
 **Шаг 4. Сервер вычисляет `Sec-WebSocket-Accept`**
 
@@ -309,8 +324,7 @@ writer.close()
 await writer.wait_closed()
 ```
 
-Асимметрия намеренна (RFC 6455, параграф 7.1.1): сервер должен закрывать TCP первым, чтобы именно он удерживал состояние `TIME_WAIT`, а не клиент. Для клиента `TIME_WAIT` означает, что он не может переоткрыть то же соединение в течение 2MSL (двух максимальных времен жизни TCP-сегмента). Для сервера удержание `TIME_WAIT` не создаёт аналогичных проблем, потому что новое входящее `SYN` с большим
-порядковым номером немедленно открывает новое соединение.
+Асимметрия намеренна (RFC 6455, параграф 7.1.1): сервер должен закрывать TCP первым, чтобы именно он удерживал состояние `TIME_WAIT`, а не клиент. Для клиента `TIME_WAIT` означает, что он не может переоткрыть то же соединение в течение 2MSL (двух максимальных времен жизни TCP-сегмента). Для сервера удержание `TIME_WAIT` не создает аналогичных проблем, потому что новое входящее `SYN` с большим порядковым номером немедленно открывает новое соединение.
 
 **Шаги 15. Обе стороны переходят в `CLOSED`**
 
